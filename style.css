@@ -1,0 +1,19 @@
+.control__button {
+    outline: none;
+    border: none;
+    width: 2rem;
+    height: 2rem;
+    margin: 0;
+}
+.control__button--left-up {
+    background: green;
+}
+.control__button--right-up {
+    background: red;
+}
+.control__button--left-down {
+    background: yellow;
+}
+.control__button--right-down {
+    background: blue;
+}
