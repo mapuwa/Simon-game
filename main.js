@@ -3,6 +3,7 @@ var SimonGame = function () {
     var line = [];
     var userLine = [];
     var listening = false;
+    var context;
 
     function nextOne () {
         line.push(Math.floor(Math.random()*4));
@@ -13,6 +14,7 @@ var SimonGame = function () {
     }
     function click(n) {
         userLine.push(n);
+        playNote(n);
         console.log("click " + n)
     }
     function init() {
@@ -23,6 +25,14 @@ var SimonGame = function () {
                 });
             }(i);
         }
+        try {
+            window.AudioContext = window.AudioContext||window.webkitAudioContext;
+            context = new AudioContext();
+        }
+        catch(e) {
+            alert('Web Audio API is not supported in this browser');
+        }
+        nextRound();
     }
     function nextRound() {
         nextOne();
@@ -30,8 +40,17 @@ var SimonGame = function () {
         listening = true;
 
     }
+    function playNote(i) {
+        var notes = [440,554.365,659.255,783.991];
+        var oscillator = context.createOscillator();
+        oscillator.frequency.value = notes[i];
+        oscillator.connect(context.destination);
+        oscillator.start(0);
+        setTimeout(function () {
+            oscillator.stop();
+        },500);
+    }
     init();
-
     return {
 
     };
